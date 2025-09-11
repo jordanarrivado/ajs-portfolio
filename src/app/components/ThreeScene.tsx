@@ -12,9 +12,9 @@ useGLTF.preload("/models/hero3d.glb");
 type GroupProps = ComponentPropsWithoutRef<"group">;
 
 const MotionGroup = motion.create(
-  forwardRef<THREE.Group, GroupProps>((props, ref) => (
-    <group ref={ref} {...props} />
-  ))
+  forwardRef<THREE.Group, GroupProps>(function MotionGroupBase(props, ref) {
+    return <group ref={ref} {...props} />;
+  })
 );
 
 function Model() {
