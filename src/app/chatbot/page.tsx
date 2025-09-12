@@ -80,9 +80,9 @@ export default function ChatbotPage() {
   Salary? Please. Jordan can barely afford good coffee ☕—yet here I am, making his projects sound cooler than they actually are (don’t tell him I said that🤫).`;
 
   return (
-    <div className="flex h-[81vh] p-6 gap-1">
-      {/* LEFT SIDE - Robot + Intro */}
-      <div className="w-1/2 flex items-center justify-center">
+    <div className="flex h-[81vh] p-6 gap-1 flex-col sm:flex-row">
+      {/* LEFT SIDE - Robot + Intro (hidden on mobile) */}
+      <div className="hidden sm:flex w-1/2 items-center justify-center">
         <div className="flex-shrink-0">
           <MiniRobot />
         </div>
@@ -111,8 +111,8 @@ export default function ChatbotPage() {
         </div>
       </div>
 
-      {/* RIGHT SIDE - Chatbox */}
-      <div className="w-1/2 flex">
+      {/* RIGHT SIDE - Chatbox (always visible, full width on mobile) */}
+      <div className="w-full sm:w-1/2 flex">
         <motion.div
           initial={{
             opacity: 0,

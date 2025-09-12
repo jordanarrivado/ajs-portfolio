@@ -17,7 +17,11 @@ export default function Error({
   return (
     <div className="relative flex flex-col items-center justify-center h-screen text-center px-4 overflow-hidden">
       {/* Robot icon */}
-      <FaRobot className="text-[#E5D8C2] text-8xl mb-6 animate-bounce" />
+      <FaRobot
+        className="text-[#
+      
+      ] text-8xl mb-6 animate-bounce"
+      />
 
       {/* Error message */}
       <h1 className="text-4xl font-extrabold text-[#E5D8C2] mb-4 animate-glitch">

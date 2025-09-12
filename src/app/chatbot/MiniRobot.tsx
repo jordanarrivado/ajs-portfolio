@@ -113,7 +113,7 @@ export default function MiniRobot() {
   const [shadowScale, setShadowScale] = useState(1);
 
   return (
-    <div className="relative w-[25vw] h-[80vh] mb-10 flex flex-col items-center">
+    <div className="relative w-[25vw] h-[80vh] mb-10 sm:flex flex-col items-center hidden">
       <Canvas camera={{ position: [0, 2, 7], fov: 50 }}>
         <CinematicLights />
 
