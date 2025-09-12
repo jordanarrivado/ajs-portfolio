@@ -39,15 +39,24 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased 
-    bg-[radial-gradient(circle_at_center,_rgba(40,40,40,0.9)_0%,_rgba(60,60,60,0.7)_40%,_rgba(90,90,90,0.5)_70%,_rgba(120,120,120,0.4)_100%)]`}
+        bg-[radial-gradient(circle_at_center,_rgba(40,40,40,0.9)_0%,_rgba(60,60,60,0.7)_40%,_rgba(90,90,90,0.5)_70%,_rgba(120,120,120,0.4)_100%)]`}
       >
         <SparkleTrail />
 
+        {/* Navbar always visible */}
         <Navbar />
+
         <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="flex-1 p-6">{children}</main>
+          {/* Sidebar hidden on mobile, shown on md+ */}
+          <div className="hidden md:block">
+            <Sidebar />
+          </div>
+
+          {/* Main content adapts */}
+          <main className="flex-1 p-4 sm:p-6 w-[20%]">{children}</main>
         </div>
+
+        {/* Mobile footer stays at bottom */}
         <Footer />
       </body>
     </html>
