@@ -11,11 +11,7 @@ import {
 } from "react-icons/fa";
 import Button from "./ui/Button";
 
-type GithubLink = {
-  link: string;
-};
-
-export default function Navbar({ link }: GithubLink) {
+export default function Navbar() {
   return (
     <nav className="flex justify-between items-center px-4 sm:px-8 py-3 bg-surface/90 sticky top-2 z-50">
       {/* Left: Logo */}
