@@ -43,20 +43,31 @@ export default function RootLayout({
       >
         <SparkleTrail />
 
-        {/* Navbar always visible */}
+        {/* Navbar always visible at top */}
         <Navbar />
 
         <div className="flex min-h-screen">
-          {/* Sidebar hidden on mobile, shown on md+ */}
+          {/* Sidebar (hidden on mobile, visible on md+) */}
           <div className="hidden md:block">
-            <Sidebar />
+            {" "}
+            <Sidebar />{" "}
           </div>
 
-          {/* Main content adapts */}
-          <main className="flex-1 p-4 sm:p-6 w-[20%]">{children}</main>
+          {/* Main content (full width on mobile, shrinks next to sidebar on md+) */}
+          <main
+            className="
+              flex-1 
+              w-full md:w-auto 
+              p-4 sm:p-6 lg:p-2
+              max-w-8xl mx-auto   
+              overflow-auto
+            "
+          >
+            {children}
+          </main>
         </div>
 
-        {/* Mobile footer stays at bottom */}
+        {/* Footer always at bottom */}
         <Footer />
       </body>
     </html>

@@ -113,23 +113,29 @@ export default function MiniRobot() {
   const [shadowScale, setShadowScale] = useState(1);
 
   return (
-    <div className="relative w-[25vw] h-[80vh] mb-10 sm:flex flex-col items-center hidden">
+    <div
+      className="
+        relative flex flex-col items-center
+        w-full h-[35vh]       
+        md:w-full md:h-[50vh] 
+        lg:w-[50vw] lg:h-[50vh] 
+        xl:w-[40vh] xl:h-[75vh] xl:pb-10
+        mb-4 lg:mb-6
+      "
+    >
       <Canvas camera={{ position: [0, 2, 7], fov: 50 }}>
         <CinematicLights />
 
         <Suspense fallback={null}>
           <Model
             onYChange={(y) => {
-              // y ranges about -0.15 to +0.15
-              // Map it so: low y → scale = 1.2, high y → scale = 0.8
               const minY = -0.15;
               const maxY = 0.15;
               const minScale = 1.2;
               const maxScale = 0.8;
 
-              const t = (y - minY) / (maxY - minY); // normalize 0..1
+              const t = (y - minY) / (maxY - minY);
               const scale = minScale + (maxScale - minScale) * t;
-
               setShadowScale(scale);
             }}
           />
@@ -148,11 +154,11 @@ export default function MiniRobot() {
         />
       </Canvas>
 
-      {/* Shadow span */}
+      {/* Fake shadow */}
       <span
         style={{
           transform: `scale(${shadowScale}, ${shadowScale * 0.4})`,
-          transition: "transform 0.05s linear", // faster to feel more synced
+          transition: "transform 0.05s linear",
         }}
         className="absolute bottom-4 w-24 h-6 bg-black/40 rounded-full blur-md"
       />

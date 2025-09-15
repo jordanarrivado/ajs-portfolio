@@ -110,7 +110,7 @@ function CinematicLights() {
 
 export default function ThreeScene() {
   return (
-    <div className="relative w-[50vw] h-[50vh] sm:w-[50vw] sm:h-[100vh]">
+    <div className="relative w-[60vw] h-[45vh] sm:w-[50vw] sm:h-[100vh]">
       <Canvas camera={{ position: [0, 2, 7], fov: 50 }}>
         <CinematicLights />
 
