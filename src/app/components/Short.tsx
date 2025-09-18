@@ -2,18 +2,19 @@
 
 import { motion } from "framer-motion";
 import Button from "./ui/Button";
+import { FaUser, FaLaptopCode, FaFolderOpen } from "react-icons/fa6";
 
 export default function ShortAbout() {
   return (
     <motion.div
       className="
-        relative sm:absolute 
-        mt-14 sm:mt-0 
-        px-4 sm:px-0
-        bottom-auto sm:bottom-10 sm:left-10
-        w-full sm:w-80 
-        text-center sm:text-left
-        space-y-2 sm:space-y-4 z-10
+        relative lg:absolute 
+        mt-14 lg:mt-0 
+        px-4 lg:px-0
+        bottom-auto lg:bottom-10 lg:left-10
+        w-full lg:w-80 
+        text-center lg:text-left
+        space-y-2 lg:space-y-4 z-10
       "
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -52,8 +53,15 @@ export default function ShortAbout() {
 
       {/* Buttons (only mobile) */}
       <motion.div className="flex flex-row gap-3 justify-center sm:hidden">
-        <Button href="/123">Projects</Button>
-        <Button href="/123">My Skills</Button>
+        <Button title="About Me" href="/about" className="text-[#E5D8C2]">
+          <FaUser />
+        </Button>
+        <Button title="My Projects" href="/projects" className="text-[#E5D8C2]">
+          <FaLaptopCode />
+        </Button>
+        <Button title="My Skills" href="/skills" className="text-[#E5D8C2]">
+          <FaFolderOpen />
+        </Button>
       </motion.div>
     </motion.div>
   );

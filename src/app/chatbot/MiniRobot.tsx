@@ -120,7 +120,8 @@ export default function MiniRobot() {
         md:w-full md:h-[50vh] 
         lg:w-[50vw] lg:h-[50vh] 
         xl:w-[40vh] xl:h-[75vh] xl:pb-10
-        mb-4 lg:mb-6
+        mb-4 lg:mb-50
+
       "
     >
       <Canvas camera={{ position: [0, 2, 7], fov: 50 }}>
@@ -160,7 +161,7 @@ export default function MiniRobot() {
           transform: `scale(${shadowScale}, ${shadowScale * 0.4})`,
           transition: "transform 0.05s linear",
         }}
-        className="absolute bottom-4 w-24 h-6 bg-black/40 rounded-full blur-md"
+        className="absolute bottom-[-10] lg:bottom-9 w-24 h-6 bg-black/30 lg:bg-black/50 rounded-full blur-md"
       />
     </div>
   );

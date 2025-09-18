@@ -42,6 +42,7 @@ next-env.d.ts
 
 .env.local
 
+src/app/components/ThreeScene.tsx
 src/app/skills/page.tsx
 src/app/projects/page.tsx
 src/app/chatbot/Orig.tsx

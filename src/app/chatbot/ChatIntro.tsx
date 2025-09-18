@@ -12,7 +12,8 @@ export default function ChatIntro() {
         w-full max-w-xl   
         md:max-w-xl       
         xl:max-w-2xl       
-        px-2 sm:px-4      
+        px-2 sm:px-4
+        mb-4 lg:mb-40      
       "
     >
       <p

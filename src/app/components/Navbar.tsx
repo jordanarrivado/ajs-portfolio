@@ -28,8 +28,12 @@ export default function Navbar() {
 
       {/* Center: Links (hidden on mobile) */}
       <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 gap-4">
-        <Button href="/">Portfolio</Button>
-        <Button href="/chatbot">Chatbot</Button>
+        <Button href="/" className="backdrop-blur-md">
+          Portfolio
+        </Button>
+        <Button href="/chatbot" className="backdrop-blur-lg">
+          Chatbot
+        </Button>
       </div>
 
       {/* Right: Circle Buttons */}
@@ -43,10 +47,10 @@ export default function Navbar() {
       </div>
       <div className="sm:flex gap-2 sm:gap-3 hidden">
         <Button href="https://github.com/jordanarrivado" rounded>
-          <FaGithub size={20} />
+          <FaGithub size={20} color="#E5D8C2" />
         </Button>
         <Button href="https://www.linkedin.com/in/jordan-arrivado" rounded>
-          <FaLinkedin size={20} />
+          <FaLinkedin size={20} color="#E5D8C2" />
         </Button>
       </div>
     </nav>

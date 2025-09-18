@@ -1,4 +1,4 @@
-import Hero from "./components/Hero";
+import Hero from "./components/avatar/Hero";
 import Shortabout from "./components/Short";
 //import Float from "./components/Float";
 export default function HomePage() {
