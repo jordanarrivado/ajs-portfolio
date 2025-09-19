@@ -4,17 +4,17 @@ import { connectDB } from "@/lib/db";
 
 // GET specific chat log by ID
 export async function GET(
-  req: NextRequest, 
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(
-        { success: false, error: "Chat log ID is required" }, 
+        { success: false, error: "Chat log ID is required" },
         { status: 400 }
       );
     }
@@ -23,43 +23,42 @@ export async function GET(
 
     if (!chatLog) {
       return NextResponse.json(
-        { success: false, error: "Chat log not found" }, 
+        { success: false, error: "Chat log not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: chatLog
+      data: chatLog,
     });
-
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("ChatLog GET by ID error:", message);
-    
+
     return NextResponse.json(
-      { 
+      {
         success: false,
-        error: message || "Failed to fetch chat log" 
-      }, 
+        error: message || "Failed to fetch chat log",
+      },
       { status: 500 }
     );
   }
 }
 
-// Optional: DELETE specific chat log by ID
+// DELETE specific chat log by ID
 export async function DELETE(
-  req: NextRequest, 
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(
-        { success: false, error: "Chat log ID is required" }, 
+        { success: false, error: "Chat log ID is required" },
         { status: 400 }
       );
     }
@@ -68,7 +67,7 @@ export async function DELETE(
 
     if (!deletedChatLog) {
       return NextResponse.json(
-        { success: false, error: "Chat log not found" }, 
+        { success: false, error: "Chat log not found" },
         { status: 404 }
       );
     }
@@ -76,18 +75,17 @@ export async function DELETE(
     return NextResponse.json({
       success: true,
       message: "Chat log deleted successfully",
-      data: deletedChatLog
+      data: deletedChatLog,
     });
-
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("ChatLog DELETE error:", message);
-    
+
     return NextResponse.json(
-      { 
+      {
         success: false,
-        error: message || "Failed to delete chat log" 
-      }, 
+        error: message || "Failed to delete chat log",
+      },
       { status: 500 }
     );
   }
