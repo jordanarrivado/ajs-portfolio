@@ -10,8 +10,6 @@ import SidebarNav from "./SidebarArrow";
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-
-  // Proper boolean check for sidebar pages
   const isSidebar = ["/about", "/skills", "/projects"].includes(pathname);
 
   const [currentPage, setCurrentPage] = useState(
@@ -21,7 +19,8 @@ export default function Sidebar() {
     )
   );
 
-  if (pathname === "/chatbot") return null;
+  // Hide sidebar for specific routes
+  if (pathname === "/chatbot" || pathname === "/dashboard") return null;
 
   const goPrev = () => {
     if (currentPage > 0) {
