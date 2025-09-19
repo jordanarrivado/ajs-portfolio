@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
+// Get MongoDB URI from env
+const uri = process.env.MONGODB_URI;
+if (!uri) {
   throw new Error(
     "❌ Please define the MONGODB_URI environment variable inside Vercel or .env.local"
   );
 }
 
-// Now TS knows this is a string
-const MONGODB_URI_STRING: string = MONGODB_URI;
+// Now `uri` is definitely a string
+const MONGODB_URI: string = uri;
 
 // Type for the cached connection
 type MongooseCache = {
@@ -19,6 +19,7 @@ type MongooseCache = {
 
 // Extend global to include mongoose cache
 declare global {
+  // eslint-disable-next-line no-var
   var mongoose: MongooseCache | undefined;
 }
 
@@ -27,25 +28,26 @@ const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 global.mongoose = cached;
 
 export async function connectDB(): Promise<typeof mongoose> {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
     console.log("🔗 Connecting to MongoDB...");
-    cached.promise = mongoose.connect(MONGODB_URI_STRING, {
-      dbName: "portfolio_chat",
-      ssl: true,
-      tls: true,
-      tlsAllowInvalidCertificates: false, // only true for local testing
-      serverSelectionTimeoutMS: 10000,
-    }).then((mongooseInstance) => {
-      console.log(`✅ MongoDB Connected: ${mongooseInstance.connection.host}`);
-      return mongooseInstance;
-    }).catch((err) => {
-      console.error("❌ MongoDB connection error:", err);
-      throw err;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI, {
+        dbName: "portfolio_chat",
+        ssl: true,
+        tls: true,
+        tlsAllowInvalidCertificates: false,
+        serverSelectionTimeoutMS: 10000,
+      })
+      .then((mongooseInstance) => {
+        console.log(`✅ MongoDB Connected: ${mongooseInstance.connection.host}`);
+        return mongooseInstance;
+      })
+      .catch((err) => {
+        console.error("❌ MongoDB connection error:", err);
+        throw err;
+      });
   }
 
   cached.conn = await cached.promise;
