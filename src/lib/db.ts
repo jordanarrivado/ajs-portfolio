@@ -1,51 +1,53 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI || "";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error("❌ Please define the MONGODB_URI environment variable inside .env.local");
+  throw new Error(
+    "❌ Please define the MONGODB_URI environment variable inside Vercel or .env.local"
+  );
 }
 
-let isConnected = false;
+// Now TS knows this is a string
+const MONGODB_URI_STRING: string = MONGODB_URI;
 
-export async function connectDB() {
-  if (isConnected) {
-    return mongoose.connection;
+// Type for the cached connection
+type MongooseCache = {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+};
+
+// Extend global to include mongoose cache
+declare global {
+  var mongoose: MongooseCache | undefined;
+}
+
+// Initialize global cache if it doesn't exist
+const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+global.mongoose = cached;
+
+export async function connectDB(): Promise<typeof mongoose> {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  try {
+  if (!cached.promise) {
     console.log("🔗 Connecting to MongoDB...");
-    console.log(`🌐 URI: ${MONGODB_URI.replace(/\/\/.*@/, "//<credentials>@")}`); // hide creds
-
-    const conn = await mongoose.connect(MONGODB_URI, {
+    cached.promise = mongoose.connect(MONGODB_URI_STRING, {
       dbName: "portfolio_chat",
-      ssl: true, // ensure TLS
+      ssl: true,
       tls: true,
-      tlsAllowInvalidCertificates: false, // set to true ONLY for local testing
-      serverSelectionTimeoutMS: 10000, // fail fast if unreachable
-    });
-
-    isConnected = true;
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-    return conn.connection;
-  } catch (err: unknown) {
-    console.error("❌ MongoDB connection error:");
-
-    if (err instanceof Error) {
-      if (err.message.includes("tlsv1 alert internal error")) {
-        console.error(
-          "⚠️ TLS handshake failed. Check:\n" +
-            "- Your Node.js version (must support TLS 1.2+)\n" +
-            "- Your network/firewall/VPN settings\n" +
-            "- Whether MongoDB Atlas is reachable from your machine"
-        );
-      }
-      console.error(err.message);
+      tlsAllowInvalidCertificates: false, // only true for local testing
+      serverSelectionTimeoutMS: 10000,
+    }).then((mongooseInstance) => {
+      console.log(`✅ MongoDB Connected: ${mongooseInstance.connection.host}`);
+      return mongooseInstance;
+    }).catch((err) => {
+      console.error("❌ MongoDB connection error:", err);
       throw err;
-    } else {
-      // Fallback for non-Error throwables
-      console.error(err);
-      throw new Error("Unknown MongoDB connection error");
-    }
+    });
   }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
